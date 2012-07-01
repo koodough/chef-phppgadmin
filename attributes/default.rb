@@ -21,3 +21,5 @@ default[:phppgadmin][:webserver] = "nginx"
 default[:phppgadmin][:port] = 4000
 default[:phppgadmin][:hostname] = 'localhost'
 default[:phppgadmin][:log_dir] = '/var/log/phppgadmin'
+
+default['phppgadmin']['config_dir'] = '/etc/phppgadmin'

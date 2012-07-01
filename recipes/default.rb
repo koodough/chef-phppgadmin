@@ -50,6 +50,16 @@ when 'nginx'
     mode "0640"
   end
 
+  template "#{node['phppgadmin']['config_dir']}/config.inc.php" do
+    source "config.inc.php.erb"
+    owner "root"
+    group "root"
+    mode "0644"
+    variables(
+      :config => node['phppgadmin']['config']
+    )
+  end
+
   directory node[:phppgadmin][:log_dir] do
     owner "root"
     group "root"
