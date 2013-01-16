@@ -37,7 +37,7 @@ ErrorLog <%= node[:phppgadmin][:log_dir] %>/error.log
 
 # Possible values include: debug, info, notice, warn, error, crit,
 # alert, emerg.
-LogLevel <%= node[:phppgadmin][:log_level] %>warn
+LogLevel <%= node[:phppgadmin][:log_level] %>
 
 CustomLog <%= node[:phppgadmin][:log_dir] %>/access.log combined
 ServerSignature On
