@@ -19,7 +19,10 @@
 
 default[:phppgadmin][:webserver] = "nginx"
 default[:phppgadmin][:port] = 4000
+default[:phppgadmin][:home] = '/usr/share/phppgadmin'
 default[:phppgadmin][:hostname] = 'localhost'
 default[:phppgadmin][:log_dir] = '/var/log/phppgadmin'
+default[:phppgadmin][:log_level] = 'warn'
+
 
 default['phppgadmin']['config_dir'] = '/etc/phppgadmin'
