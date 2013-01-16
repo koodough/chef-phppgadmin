@@ -1,0 +1,46 @@
+# phpPgAdmin default Apache configuration
+
+<VirtualHost *:<%= node[:phppgadmin][:port] %>>
+ServerName <%= node[:phppgadmin][:hostname] %>
+
+Alias /phppgadmin <%= node[:phppgadmin][:home] %>
+
+DocumentRoot <%= node[:phppgadmin][:home] %>
+
+<Directory <%= node[:phppgadmin][:home] %>>
+Allow from All
+Options Indexes FollowSymLinks
+DirectoryIndex index.php
+
+<IfModule mod_php5.c>
+AddType application/x-httpd-php .php
+
+php_flag magic_quotes_gpc Off
+php_flag track_vars On
+php_flag register_globals Off
+php_value include_path .
+</IfModule>
+
+</Directory>
+
+# Disallow web access to directories that don't need it
+<Directory <%= node[:phppgadmin][:home] %>/libraries>
+Order Deny,Allow
+Deny from All
+</Directory>
+<Directory <%= node[:phppgadmin][:home] %>/conf>
+Order Deny,Allow
+Deny from All
+</Directory>
+
+ErrorLog <%= node[:phppgadmin][:log_dir] %>/error.log
+
+# Possible values include: debug, info, notice, warn, error, crit,
+# alert, emerg.
+LogLevel <%= node[:phppgadmin][:log_level] %>warn
+
+CustomLog <%= node[:phppgadmin][:log_dir] %>/access.log combined
+ServerSignature On
+
+</VirtualHost>
+
