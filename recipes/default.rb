@@ -50,25 +50,38 @@ when 'nginx'
     mode "0640"
   end
 
-  template "#{node['phppgadmin']['config_dir']}/config.inc.php" do
-    source "config.inc.php.erb"
-    owner "root"
-    group "root"
-    mode "0644"
-    variables(
-      :config => node['phppgadmin']['config']
-    )
-  end
-
-  directory node[:phppgadmin][:log_dir] do
-    owner "root"
-    group "root"
-    mode "0755"    
-    action :create
-  end
 
   link "/etc/nginx/sites-enabled/phppgadmin.conf" do
     to "/etc/nginx/sites-available/phppgadmin.conf"
     notifies :restart, "service[nginx]", :delayed
   end
+
+when 'apache2', 'apache'
+  template "/etc/apache2/sites-available/phppgadmin.conf" do
+		source "phppgadmin-apache.conf.erb"
+		owner "root"
+		group "root"
+		mode "640"
+	end
+  #Add site to sites-enabled
+	apache_site "phppgadmin.conf"
+end
+
+#Config Directory
+template "#{node['phppgadmin']['config_dir']}/config.inc.php" do
+	source "config.inc.php.erb"
+	owner "root"
+	group "root"
+	mode "0644"
+	variables(
+		:config => node['phppgadmin']['config']
+	)
+end
+
+#Log Directory
+directory node[:phppgadmin][:log_dir] do
+	owner "root"
+	group "root"
+	mode "0755"    
+	action :create
 end
