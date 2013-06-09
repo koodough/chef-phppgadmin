@@ -17,9 +17,18 @@
 # limitations under the License.
 #
 
-package 'phppgadmin' do
-  action :install
+
+case node['platform_family']
+when "rhel", "fedora"
+	package 'phpPgAdmin' do
+		action :install
+	end
+else
+	package 'phppgadmin' do
+		action :install
+	end
 end
+
 
 case node[:phppgadmin][:webserver]
 when 'nginx'
